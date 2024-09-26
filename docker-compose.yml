@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  database:
+    image: postgres:16-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    networks:
+      - rst_network
+
+volumes:
+  database_data:
+    driver: local
+
+networks:
+  rst_network:
+    driver: bridge
