@@ -1,9 +1,10 @@
 package com.real_estate.backend.controller;
 
+import com.real_estate.backend.entity.PostEntity;
 import com.real_estate.backend.service.PostServices;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class PostController {
@@ -14,13 +15,19 @@ public class PostController {
 
     private final PostServices postServices;
 
-    @GetMapping("/testEndpoint")
-    public String testController(){
-        return postServices.postServices();
+    @GetMapping("/posts")
+    public List<PostEntity> findAll() {
+        return postServices.findAll();
+    }
+
+    @GetMapping("/posts/")
+    public PostEntity findById(@RequestParam Long id) {
+       return postServices.findPostById(id);
     }
 
     @PostMapping("/posts")
-    public void postController(){
-        postServices.createPost("test post");
+    public void postController(@RequestBody String content){
+        // todo - 1: как сделать именованный параметр в свагер. Настрйока request body параметров
+        postServices.createPost(content);
     }
 }
