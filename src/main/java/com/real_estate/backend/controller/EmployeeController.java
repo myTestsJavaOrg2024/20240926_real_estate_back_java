@@ -19,13 +19,11 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public List<EmployeeEntity> getAllEmployees() {
-//    todo:    как выдавать сериализованный список со вложенными объектами
         return employeeService.getAllEmployees();
     }
 
-    @PostMapping("/employees/")
-    public EmployeeEntity createEmployee(@RequestBody EmployeeEntity employeeEntity) {
-//        todo: как правильно передавать параметры
-        employeeService.createEmployee();
-    }
+//    @PostMapping("/employees/")
+//    public EmployeeEntity createEmployee(@RequestBody EmployeeEntity employeeEntity) {
+//        employeeService.createEmployee();
+//    }
 }

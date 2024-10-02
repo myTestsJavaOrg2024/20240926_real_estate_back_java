@@ -1,7 +1,8 @@
 package com.real_estate.backend.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -9,14 +10,19 @@ public class EmployeeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
-    private String firstName;
-    private String lastName;
+    private String userName;
+
+    @ManyToMany
+    @JoinTable(
+            name = "project_employee",  // Название промежуточной таблицы
+            joinColumns = @JoinColumn(name = "project_id"),  // Внешний ключ для EmployeeEntity
+            inverseJoinColumns = @JoinColumn(name = "employee_id")  // Внешний ключ для ProjectEntity
+    )
+    private Set<ProjectEntity> projects;
     //    todo - 9: картинки работа с s3 аватары и миниатюры
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<PostEntity> posts;
 
     public void setId(Long id) {
         this.id = id;
@@ -26,30 +32,19 @@ public class EmployeeEntity {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Set<ProjectEntity> getProjects() {
+        return projects;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public List<PostEntity> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<PostEntity> posts) {
-//        todo - 2 как организовать этот метод лучше
-//        todo - 3 как реализовать сериализованное представление
-//        todo - 4 рассказать про проблемму N + 1
-        this.posts = posts;
+    public void setProjects(Set<ProjectEntity> projects) {
+        this.projects = projects;
     }
 }
